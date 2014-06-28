@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:weightSum="1">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="60dp"
+            android:text="Buetooth"
+            android:id="@+id/textView" android:layout_gravity="center_horizontal"/>
+    <Button
+            android:layout_width="244dp"
+            android:layout_height="wrap_content"
+            android:text="Connect"
+            android:id="@+id/button3" android:layout_gravity="center_horizontal" android:layout_weight="0.05"/>
+    <Button
+            android:layout_width="245dp"
+            android:layout_height="50px"
+            android:text="Led on"
+            android:id="@+id/button" android:layout_gravity="center_horizontal" android:layout_weight="0.18"/>
+    <Button
+            android:layout_width="245dp"
+            android:layout_height="50px"
+            android:text="Led off"
+            android:id="@+id/button2" android:layout_gravity="center_horizontal" android:layout_weight="0.20"/>
+</LinearLayout>
+
