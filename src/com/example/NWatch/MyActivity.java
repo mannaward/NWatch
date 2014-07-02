@@ -5,16 +5,17 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 import com.example.NWatch.connection.BluetoothManager;
+import com.example.NWatch.service.NotificationService;
+import com.example.NWatch.service.ServiceReceiver;
 import com.example.NWatch.utils.Constants;
-import com.example.NWatch.utils.Logs;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -30,6 +31,8 @@ public class MyActivity extends Activity {
     private BluetoothManager mBtManager;
     //private ServiceHandler mServiceHandler = new ServiceHandler();
     private Handler mHandler = new Handler();
+
+    private ServiceReceiver mServiceReceiver;
 
     /**
      * Called when the activity is first created.
@@ -55,6 +58,14 @@ public class MyActivity extends Activity {
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
 
+
+        //Intent intent = new Intent(Constants.NOTIFICATION_LISTENER);
+        //sendBroadcast(intent);
+        ServiceReceiver mSReceiver = new ServiceReceiver();
+        IntentFilter filter = new IntentFilter(Constants.NOTIFICATION_LISTENER);
+        registerReceiver(mSReceiver, filter);
+
+
         OnClickListener connectL = new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +84,7 @@ public class MyActivity extends Activity {
                 if (bDevice != null) {
                     mBtManager.connect(bDevice);
                 }
+                startService(new Intent(context, NotificationService.class));
             }
         };
 

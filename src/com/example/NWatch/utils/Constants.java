@@ -5,8 +5,8 @@ package com.example.NWatch.utils;
  */
 public class Constants {
     // Notification intent action string
-    public static final String NOTIFICATION_LISTENER_SERVICE = "com.hardcopy.retrowatch.NOTIFICATION_LISTENER_SERVICE";
-    public static final String NOTIFICATION_LISTENER = "com.hardcopy.retrowatch.NOTIFICATION_LISTENER";
+    public static final String NOTIFICATION_LISTENER_SERVICE = "com.example.NWatch.NOTIFICATION_LISTENER_SERVICE";
+    public static final String NOTIFICATION_LISTENER = "com.example.NWatch.NOTIFICATION_LISTENER";
 
     // Service handler message key
     public static final String SERVICE_HANDLER_MSG_KEY_DEVICE_NAME = "device_name";
