@@ -69,21 +69,21 @@ public class MyActivity extends Activity {
         OnClickListener connectL = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBtManager = new BluetoothManager(context, mHandler);
-                Set s = mBluetoothAdapter.getBondedDevices();
-                BluetoothDevice bDevice = null;
-                Iterator<BluetoothDevice> i = s.iterator();
-                while (i.hasNext()) {
-                    BluetoothDevice bd = i.next();
-                    if (bd.getName().equals("HC-06")) {
-                        //MAC-address "20:14:03:25:62:51"
-                        bDevice = bd;
-                        break;
-                    }
-                }
-                if (bDevice != null) {
-                    mBtManager.connect(bDevice);
-                }
+//                mBtManager = new BluetoothManager(context, mHandler);
+//                Set s = mBluetoothAdapter.getBondedDevices();
+//                BluetoothDevice bDevice = null;
+//                Iterator<BluetoothDevice> i = s.iterator();
+//                while (i.hasNext()) {
+//                    BluetoothDevice bd = i.next();
+//                    if (bd.getName().equals("HC-06")) {
+//                        //MAC-address "20:14:03:25:62:51"
+//                        bDevice = bd;
+//                        break;
+//                    }
+//                }
+//                if (bDevice != null) {
+//                    mBtManager.connect(bDevice);
+//                }
                 startService(new Intent(context, NotificationService.class));
             }
         };
@@ -91,29 +91,28 @@ public class MyActivity extends Activity {
        OnClickListener ledOnL = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mBtManager != null) {
-                    // byte definitions for buffer setting
-                    byte TRANSACTION_START_BYTE = (byte) 0xfc;
-                    byte TRANSACTION_END_BYTE = (byte) 0xfd;
-                    String lon = "1";
-                    byte[] buffer = lon.getBytes();
-
-
-                    mBtManager.write(buffer);
-                    Toast toast = Toast.makeText(getApplicationContext(), "Led on", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+//                if (mBtManager != null) {
+//                    // byte definitions for buffer setting
+//                    byte TRANSACTION_START_BYTE = (byte) 0xfc;
+//                    byte TRANSACTION_END_BYTE = (byte) 0xfd;
+//                    String lon = "1";
+//                    byte[] buffer = lon.getBytes();
+//
+//                    mBtManager.write(buffer);
+//                    Toast toast = Toast.makeText(getApplicationContext(), "Led on", Toast.LENGTH_SHORT);
+//                    toast.show();
+//                }
             }
         };
 
         OnClickListener ledOffL = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                String lon = "0";
-                byte[] buffer = lon.getBytes();
-                mBtManager.write(buffer);
-                Toast toast = Toast.makeText(getApplicationContext(), "Led off", Toast.LENGTH_SHORT);
-                toast.show();
+//                String lon = "0";
+//                byte[] buffer = lon.getBytes();
+//                mBtManager.write(buffer);
+//                Toast toast = Toast.makeText(getApplicationContext(), "Led off", Toast.LENGTH_SHORT);
+//                toast.show();
             }
         };
 

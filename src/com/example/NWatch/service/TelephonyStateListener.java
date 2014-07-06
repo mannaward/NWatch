@@ -12,20 +12,29 @@ import com.example.NWatch.utils.Logs;
 public class TelephonyStateListener extends PhoneStateListener {
     private static final String TAG = "TelStateListener";
     private static boolean phoneRinging = false;
+    private static boolean wasOffHook = false;
 
     @Override
     public void onCallStateChanged(int state, String incomingNumber) {
         switch (state) {
             case TelephonyManager.CALL_STATE_IDLE:
                 Logs.d(TAG, "IDLE");
+                if (phoneRinging == true) {
+                    if (wasOffHook == false) {
+                        NotificationService.ledBlink();
+                    }
+                }
                 phoneRinging = false;
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK:
                 Logs.d(TAG, "OFFHOOK");
+                NotificationService.ledOff();
+                wasOffHook = true;
                 phoneRinging = false;
                 break;
             case TelephonyManager.CALL_STATE_RINGING:
-                Logs.d(TAG, "RINGING");
+                System.out.println(incomingNumber + " IS RINGING");
+                NotificationService.ledOn();
                 phoneRinging = true;
                 break;
         }
