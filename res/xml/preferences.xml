@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:example="http://schemas.android.com/apk/res/com.example.NWatch">
+    <PreferenceCategory
+            android:title="Настройки соединения">
+        <EditTextPreference
+                android:name="mac-address"
+                android:title="MAC-адрес"
+                android:summary="MAC-адрес адаптера bluetooth"
+                android:defaultValue="00:00:00:00:00:00"
+                android:key="macAddress" />
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="Настройка уведомлений">
+        <CheckBoxPreference
+                android:title="Уведомлять обо всем"
+                android:defaultValue="true"
+                android:summary="Информировать о звонках, смс и почте"
+                android:key="defNotification" />
+        <PreferenceScreen
+                android:title="Выборочное информирование"
+                android:summary="Выбор событий для уведомления"
+                android:key="userSettingsScreen">
+            <CheckBoxPreference
+                    android:title="Входящий вызов"
+                    android:defaultValue="false"
+                    android:key="incomingCallNotification" />
+            <CheckBoxPreference
+                    android:title="Пропущеные вызовы"
+                    android:defaultValue="false"
+                    android:key="missingCallNotification" />
+            <CheckBoxPreference
+                    android:title="СМС"
+                    android:defaultValue="false"
+                    android:key="smsNotification" />
+            <CheckBoxPreference
+                    android:title="e-mail"
+                    android:defaultValue="false"
+                    android:key="emailNotification" />
+        </PreferenceScreen>
+        <CheckBoxPreference
+                    android:title="Фильтр смс"
+                    android:summary="Не уведомлять об смс от оператора"
+                    android:defaultValue="false"
+                    android:key="smsFilter" />
+        <PreferenceScreen
+                android:title="Настройки e-mail"
+                android:summary="Настроить логин и пароль к почте"
+                android:key="emailSettingsScreen">
+            <EditTextPreference
+                    android:name="login"
+                    android:title="Login"/>
+            <EditTextPreference
+                    android:name="pass"
+                    android:title="Password"/>
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="Настройки часов">
+        <CheckBoxPreference
+                android:title="Брать время и дату с телефона"
+                android:defaultValue="true"
+                android:key="timeCheckbox" />
+        <ListPreference
+                android:title="Вид"
+                android:summary="Настройка типа отображения часов"
+                android:key="watchType"
+                android:defaultValue="digiGreen"
+                android:entries="@array/listArray"
+                android:entryValues="@array/listValues" />
+        <SeekBarPreference
+                android:title="Яркость экрана"
+                android:persistent="true"
+                android:defaultValue="50"
+                example:minValue="0"
+                example:maxValue="100"/>
+
+        <PreferenceScreen
+                android:key="SecondPrefScreen"
+                android:title="Second PreferenceScreen"
+                android:summary="This is a second PreferenceScreen">
+            <EditTextPreference
+                    android:name="An other EditText Preference"
+                    android:summary="This is a preference in the second PreferenceScreen"
+                    android:title="Edit text"
+                    android:key="SecondEditTextPref" />
+        </PreferenceScreen>
+        <Preference
+                android:title="Custom Preference"
+                android:summary="This works almost like a button"
+                android:key="customPref" />
+    </PreferenceCategory>
+</PreferenceScreen>

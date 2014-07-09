@@ -44,7 +44,7 @@ public class Constants {
 
 
     // Preference
-    public static final String PREFERENCE_NAME = "RetroWatchPref";
+    public static final String PREFERENCE_NAME = "NWatchPref";
 
     public static final String PREFERENCE_CONN_INFO_ADDRESS = "device_address";
     public static final String PREFERENCE_CONN_INFO_NAME = "device_name";

@@ -53,7 +53,6 @@ public class ConnectionInfo {
         // Save connection info in shared preference.
         SharedPreferences prefs = mContext.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(Constants.PREFERENCE_CONN_INFO_ADDRESS, mDeviceAddress);
         editor.putString(Constants.PREFERENCE_CONN_INFO_NAME, mDeviceName);
         editor.commit();
     }
@@ -64,5 +63,9 @@ public class ConnectionInfo {
 
     public void setDeviceAddress(String address) {
         mDeviceAddress = address;
+        SharedPreferences prefs = mContext.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.PREFERENCE_CONN_INFO_ADDRESS, mDeviceAddress);
+        editor.commit();
     }
 }

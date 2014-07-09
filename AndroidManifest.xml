@@ -23,6 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+                android:name=".Preferences"
+                android:label="@string/set_preferences">
+        </activity>
+
         <service
             android:enabled="true"
             android:name=".service.NotificationService">

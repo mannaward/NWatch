@@ -6,8 +6,11 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.ListPreference;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,14 +27,25 @@ public class MyActivity extends Activity {
     private static final String TAG = "main_activity";
 
     private static final int REQUEST_ENABLE_BT = 1;
-    Button ledOn;
-    Button ledOff;
     Button connect;
 
-    private BluetoothManager mBtManager;
-    //private ServiceHandler mServiceHandler = new ServiceHandler();
-    private Handler mHandler = new Handler();
+    String customPref;
 
+    private boolean isDefNotification;
+    private boolean isIncCall;
+    private boolean isSMS;
+    private boolean isSMSFilter;
+    private boolean isEmail;
+    private boolean isMissCalls;
+    private boolean isPhoneTime;
+
+    private String macAddress;
+    private String eLogin;
+    private String ePass;
+    private String wType;
+
+    private BluetoothManager mBtManager;
+    private Handler mHandler = new Handler();
     private ServiceReceiver mServiceReceiver;
 
     /**
@@ -42,8 +56,6 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        ledOn = (Button) findViewById(R.id.button);
-        ledOff = (Button) findViewById(R.id.button2);
         connect = (Button) findViewById(R.id.button3);
 
         final Context context = this;
@@ -58,148 +70,97 @@ public class MyActivity extends Activity {
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
 
-
-        //Intent intent = new Intent(Constants.NOTIFICATION_LISTENER);
-        //sendBroadcast(intent);
         ServiceReceiver mSReceiver = new ServiceReceiver();
         IntentFilter filter = new IntentFilter(Constants.NOTIFICATION_LISTENER);
         registerReceiver(mSReceiver, filter);
 
-
         OnClickListener connectL = new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mBtManager = new BluetoothManager(context, mHandler);
-//                Set s = mBluetoothAdapter.getBondedDevices();
-//                BluetoothDevice bDevice = null;
-//                Iterator<BluetoothDevice> i = s.iterator();
-//                while (i.hasNext()) {
-//                    BluetoothDevice bd = i.next();
-//                    if (bd.getName().equals("HC-06")) {
-//                        //MAC-address "20:14:03:25:62:51"
-//                        bDevice = bd;
-//                        break;
-//                    }
-//                }
-//                if (bDevice != null) {
-//                    mBtManager.connect(bDevice);
-//                }
                 startService(new Intent(context, NotificationService.class));
             }
         };
 
-       OnClickListener ledOnL = new OnClickListener() {
-            @Override
+        Button prefBtn = (Button) findViewById(R.id.prefBtn);
+        prefBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-//                if (mBtManager != null) {
-//                    // byte definitions for buffer setting
-//                    byte TRANSACTION_START_BYTE = (byte) 0xfc;
-//                    byte TRANSACTION_END_BYTE = (byte) 0xfd;
-//                    String lon = "1";
-//                    byte[] buffer = lon.getBytes();
-//
-//                    mBtManager.write(buffer);
-//                    Toast toast = Toast.makeText(getApplicationContext(), "Led on", Toast.LENGTH_SHORT);
-//                    toast.show();
-//                }
+                Intent settingsActivity = new Intent(getBaseContext(),
+                        Preferences.class);
+                startActivity(settingsActivity);
             }
-        };
-
-        OnClickListener ledOffL = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                String lon = "0";
-//                byte[] buffer = lon.getBytes();
-//                mBtManager.write(buffer);
-//                Toast toast = Toast.makeText(getApplicationContext(), "Led off", Toast.LENGTH_SHORT);
-//                toast.show();
-            }
-        };
+        });
 
         connect.setOnClickListener(connectL);
-        ledOn.setOnClickListener(ledOnL);
-        ledOff.setOnClickListener(ledOffL);
-
     }
 
-//    class ServiceHandler extends Handler {
-//        @Override
-//        public void handleMessage(Message msg) {
-//
-//            switch(msg.what) {
-//                case BluetoothManager.MESSAGE_STATE_CHANGE:
-//                    // Bluetooth state Changed
-//                    Logs.d(TAG, "Service - MESSAGE_STATE_CHANGE: " + msg.arg1);
-//
-//                    switch (msg.arg1) {
-//                        case BluetoothManager.STATE_NONE:
-//                            mActivityHandler.obtainMessage(Constants.MESSAGE_BT_STATE_INITIALIZED).sendToTarget();
-//                            if(mRefreshTimer != null) {
-//                                mRefreshTimer.cancel();
-//                                mRefreshTimer = null;
-//                            }
-//                            break;
-//
-//                        case BluetoothManager.STATE_LISTEN:
-//                            mActivityHandler.obtainMessage(Constants.MESSAGE_BT_STATE_LISTENING).sendToTarget();
-//                            break;
-//
-//                        case BluetoothManager.STATE_CONNECTING:
-//                            mActivityHandler.obtainMessage(Constants.MESSAGE_BT_STATE_CONNECTING).sendToTarget();
-//                            break;
-//
-//                        case BluetoothManager.STATE_CONNECTED:
-//                            mActivityHandler.obtainMessage(Constants.MESSAGE_BT_STATE_CONNECTED).sendToTarget();
-//
-//                            // Fully update remote device every 1 hour
-//                            reserveRemoteUpdate(5000);
-//                            break;
-//                    }
-//                    break;
-//
-//                case BluetoothManager.MESSAGE_WRITE:
-//                    Logs.d(TAG, "Service - MESSAGE_WRITE: ");
-//                    break;
-//
-//                case BluetoothManager.MESSAGE_READ:
-//                    Logs.d(TAG, "Service - MESSAGE_READ: ");
-//
-//                    byte[] readBuf = (byte[]) msg.obj;
-//                    // construct commands from the valid bytes in the buffer
-//                    if(mTransactionReceiver != null)
-//                        mTransactionReceiver.setByteArray(readBuf);
-//                    break;
-//
-//                case BluetoothManager.MESSAGE_DEVICE_NAME:
-//                    Logs.d(TAG, "Service - MESSAGE_DEVICE_NAME: ");
-//
-//                    // save connected device's name and notify using toast
-//                    String deviceAddress = msg.getData().getString(Constants.SERVICE_HANDLER_MSG_KEY_DEVICE_ADDRESS);
-//                    String deviceName = msg.getData().getString(Constants.SERVICE_HANDLER_MSG_KEY_DEVICE_NAME);
-//
-//                    if(deviceName != null && deviceAddress != null) {
-//                        // Remember device's address and name
-//                        mConnectionInfo.setDeviceAddress(deviceAddress);
-//                        mConnectionInfo.setDeviceName(deviceName);
-//
-//                        Toast.makeText(getApplicationContext(),
-//                                "Connected to " + deviceName, Toast.LENGTH_SHORT).show();
-//                    }
-//                    break;
-//
-//                case BluetoothManager.MESSAGE_TOAST:
-//                    Logs.d(TAG, "Service - MESSAGE_TOAST: ");
-//
-////				Toast.makeText(getApplicationContext(),
-////						msg.getData().getString(Constants.SERVICE_HANDLER_MSG_KEY_TOAST),
-////						Toast.LENGTH_SHORT).show();
-//                    break;
-//
-//            }	// End of switch(msg.what)
-//
-//            super.handleMessage(msg);
-//        }
-//    }	// End of class MainHandler
+    @Override
+    public void onStart() {
+        super.onStart();
+        getPrefs();
+    }
 
+    private void getPrefs() {
+        // Get the xml/preferences.xml preferences
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        isDefNotification = prefs.getBoolean("defNotification", true);
+        isIncCall = prefs.getBoolean("incomingCallNotification", false);
+        isSMS = prefs.getBoolean("smsNotification", false);
+        isSMSFilter = prefs.getBoolean("smsFilter", false);
+        isEmail = prefs.getBoolean("emailNotification", false);
+        isMissCalls = prefs.getBoolean("missingCallNotification", false);
+        isPhoneTime = prefs.getBoolean("timeCheckbox", true);
 
+        macAddress = prefs.getString("macAddress", "00:00:00:00:00:00");
+        eLogin = prefs.getString("login", "Login");
+        ePass = prefs.getString("pass", "Password");
+        wType = prefs.getString("watchType", "type1");
+
+        // Get the custom preference
+        SharedPreferences mSettings = getSharedPreferences("myCustomSharedPrefs", Activity.MODE_PRIVATE);
+        customPref = mSettings.getString("myCusomPref", "");
+    }
+
+    public boolean isSMSFilter() {
+        return isSMSFilter;
+    }
+
+    public boolean isDefNotification() {
+        return isDefNotification;
+    }
+
+    public boolean isIncCall() {
+        return isIncCall;
+    }
+
+    public boolean isSMS() {
+        return isSMS;
+    }
+
+    public boolean isEmail() {
+        return isEmail;
+    }
+
+    public boolean isMissCalls() {
+        return isMissCalls;
+    }
+
+    public boolean isPhoneTime() {
+        return isPhoneTime;
+    }
+
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    public String getELogin() {
+        return eLogin;
+    }
+
+    public String getEPass() {
+        return ePass;
+    }
+
+    public String getWType() {
+        return wType;
+    }
 }

@@ -41,8 +41,7 @@ public class NotificationService extends Service {
         Iterator<BluetoothDevice> i = s.iterator();
         while (i.hasNext()) {
             BluetoothDevice bd = i.next();
-            if (bd.getName().equals("HC-06")) {
-                //MAC-address "20:14:03:25:62:51"
+            if (bd.getAddress().equals(Constants.PREFERENCE_CONN_INFO_ADDRESS)) {
                 bDevice = bd;
                 break;
             }
