@@ -65,6 +65,7 @@ public class ConnectionInfo {
         mDeviceAddress = address;
         SharedPreferences prefs = mContext.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+        //editor.
         editor.putString(Constants.PREFERENCE_CONN_INFO_ADDRESS, mDeviceAddress);
         editor.commit();
     }

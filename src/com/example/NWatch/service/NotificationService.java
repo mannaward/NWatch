@@ -3,14 +3,13 @@ package com.example.NWatch.service;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.IBinder;
 import com.example.NWatch.connection.BluetoothManager;
 import com.example.NWatch.utils.Constants;
 import com.example.NWatch.utils.Logs;
+import com.example.NWatch.utils.Settings;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -34,6 +33,16 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Logs.d(TAG, "onCreate");
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Logs.d(TAG, "onStartCommand");
+
+        Settings st = Settings.getInstance(this);
+        String addr = st.getMacAddress();
+        Logs.d(TAG, "Connect to " + addr);
 
         mBtManager = new BluetoothManager(this, mHandler);
         Set s = mBluetoothAdapter.getBondedDevices();
@@ -41,22 +50,19 @@ public class NotificationService extends Service {
         Iterator<BluetoothDevice> i = s.iterator();
         while (i.hasNext()) {
             BluetoothDevice bd = i.next();
-            if (bd.getAddress().equals(Constants.PREFERENCE_CONN_INFO_ADDRESS)) {
+            if (bd.getAddress().equals(addr)) {
                 bDevice = bd;
                 break;
             }
         }
         if (bDevice != null) {
             mBtManager.connect(bDevice);
+            initialize();
+        }
+        else {
+            // can't find device
         }
 
-        Logs.d(TAG, "onCreate");
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Logs.d(TAG, "onStartCommand");
-        initialize();
         return super.onStartCommand(intent, flags, startId);
     }
 

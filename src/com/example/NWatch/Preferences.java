@@ -20,10 +20,8 @@ public class Preferences extends PreferenceActivity {
         customPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getBaseContext(), "The custom preference has been clicked",
-                        Toast.LENGTH_LONG).show();
-                SharedPreferences customSharedPreference = getSharedPreferences(
-                        "myCustomSharedPrefs", Activity.MODE_PRIVATE);
+                Toast.makeText(getBaseContext(), "The custom preference has been clicked", Toast.LENGTH_LONG).show();
+                SharedPreferences customSharedPreference = getSharedPreferences("myCustomSharedPrefs", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = customSharedPreference.edit();
                 editor.putString("myCustomPref", "The preference has been clicked");
                 editor.commit();

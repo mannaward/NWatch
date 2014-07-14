@@ -9,7 +9,7 @@
                 android:title="MAC-адрес"
                 android:summary="MAC-адрес адаптера bluetooth"
                 android:defaultValue="00:00:00:00:00:00"
-                android:key="macAddress" />
+                android:key="device_address" />
     </PreferenceCategory>
     <PreferenceCategory
             android:title="Настройка уведомлений">
@@ -17,7 +17,7 @@
                 android:title="Уведомлять обо всем"
                 android:defaultValue="true"
                 android:summary="Информировать о звонках, смс и почте"
-                android:key="defNotification" />
+                android:key="defNotif" />
         <PreferenceScreen
                 android:title="Выборочное информирование"
                 android:summary="Выбор событий для уведомления"
@@ -49,11 +49,17 @@
                 android:summary="Настроить логин и пароль к почте"
                 android:key="emailSettingsScreen">
             <EditTextPreference
+                    android:name="mailAddress"
+                    android:title="e-mail"
+                    android:key="mailAddress"/>
+            <EditTextPreference
                     android:name="login"
-                    android:title="Login"/>
+                    android:title="Login"
+                    android:key="mailLogin"/>
             <EditTextPreference
                     android:name="pass"
-                    android:title="Password"/>
+                    android:title="Password"
+                    android:key="mailPass"/>
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory
@@ -65,7 +71,7 @@
         <ListPreference
                 android:title="Вид"
                 android:summary="Настройка типа отображения часов"
-                android:key="watchType"
+                android:key="wType"
                 android:defaultValue="digiGreen"
                 android:entries="@array/listArray"
                 android:entryValues="@array/listValues" />

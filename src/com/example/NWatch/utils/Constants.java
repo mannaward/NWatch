@@ -49,9 +49,22 @@ public class Constants {
     public static final String PREFERENCE_CONN_INFO_ADDRESS = "device_address";
     public static final String PREFERENCE_CONN_INFO_NAME = "device_name";
 
+    public static final String PREFERENCE_NOTIF_DEFAULT = "defNotif";
+    public static final String PREFERENCE_NOTIF_INCOMING_CALL = "incomingCallNotification";
+    public static final String PREFERENCE_NOTIF_MISSING_CALL = "missingCallNotification";
+    public static final String PREFERENCE_NOTIF_SMS = "smsNotification";
+    public static final String PREFERENCE_NOTIF_EMAIL = "emailNotification";
+    public static final String PREFERENCE_NOTIF_SMS_FILTER = "smsFilter";
+
+    public static final String PREFERENCE_KEY_EMAIL_ADDRESS = "mailAddress";
+    public static final String PREFERENCE_KEY_EMAIL_LOGIN = "mailLogin";
+    public static final String PREFERENCE_KEY_EMAIL_PASSWORD = "mailPass";
+
+    public static final String PREFERENCE_KEY_WATCH_TYPE = "wType";
+    public static final String PREFERENCE_KEY_WATCH_TIME = "wTime";
+
     public static final String PREFERENCE_KEY_LAST_LAST_INIT_TIME = "LastInitData";
     public static final String PREFERENCE_KEY_IS_FIRST_EXEC = "IsFirstExec";
-    public static final String PREFERENCE_KEY_GMAIL_ADDRESS = "GmailAddress";
 
     //---------- Request parameter
     public static final String REQUEST_URL_NOTICE = "http://tortuga.ipdisk.co.kr/search/hotclip_notice_json.php";
